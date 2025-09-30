@@ -26,27 +26,27 @@ async function initializeData() {
         {
             id: "giris-bot",
             name: "Giriş Bot",
-            shortUrl: "cutt.ly/2rJxA8Z3",
+            shortUrl: "https://cutt.ly/2rJxA8Z3",
             status: "active",
-            clicks: { total: 12400, daily: 856, yesterday: 723, weekly: 5200, monthly: 18500 },
-            trend: [100, 120, 95, 110, 130, 115, 856]
+            clicks: { total: 0, daily: 0, yesterday: 0, weekly: 0, monthly: 0 },
+            trend: [0,0 ,0 , 0, 0, 0, 0]
         },
         {
-            id: "mail-tiklanma",
-            name: "Mail Tıklanma",
-            shortUrl: "cutt.ly/d9lgOgD",
+            id: "mail-abonelik",
+            name: "Mail Abonelik",
+            shortUrl: "https://cutt.ly/TrM8Utl8",
             status: "active",
-            clicks: { total: 8900, daily: 432, yesterday: 398, weekly: 2800, monthly: 9200 },
-            trend: [80, 90, 85, 95, 105, 98, 432]
+            clicks: { total: 0, daily: 0, yesterday: 0, weekly: 0, monthly: 0 },
+            trend: [0,0 ,0 , 0, 0, 0, 0]
         },
-        {
-            id: "fikret-data",
-            name: "Fikret Data",
-            shortUrl: "cutt.ly/75OTL",
-            status: "paused",
-            clicks: { total: 3500, daily: 0, yesterday: 0, weekly: 0, monthly: 1200 },
-            trend: [45, 52, 38, 41, 48, 0, 0]
-        }
+            {
+            id: "fikret-sms",
+            name: "Fikret SMS",
+            shortUrl: " https://cutt.ly/75OTL",
+            status: "active",
+            clicks: { total: 0, daily: 0, yesterday: 0, weekly: 0, monthly: 0 },
+            trend: [0,0 ,0 , 0, 0, 0, 0]
+        },
     ];
     
     // Simulate API delay
