@@ -8,7 +8,7 @@
   'use strict';
 
   const USE_REAL_API   = true;           // << flip when ready
-  const API_ENDPOINT   = '/api/cuttly-stats'; // or 'https://my-vercel.app/api/cuttly-stats'
+  const API_ENDPOINT   = 'https://dashboard-xi-peach.vercel.app/'; // or 'https://my-vercel.app/api/cuttly-stats'
 
   /* ---------------------------------------------------------
    * Mock data helper
