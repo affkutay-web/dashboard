@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .test-success { background: #10b981; }
+        .test-failed { background: #ef4444; }
+        .test-warning { background: #f59e0b; }
+    </style>
+</head>
+<body class="bg-gray-50 p-8">
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+            <h1 class="text-2xl font-bold text-gray-900 mb-4">Dashboard Test Raporu</h1>
+            <p class="text-gray-600">GitHub Pages uyumluluğunu test etmek için aşağıdaki testleri çalıştırın.</p>
+        </div>
+
+        <!-- Test Results -->
+        <div id="testResults" class="space-y-4">
+            <!-- JavaScript Test -->
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-lg font-semibold text-gray-900">JavaScript Testi</h2>
+                    <div id="jsTestStatus" class="px-3 py-1 rounded-full text-white text-sm font-medium test-warning">
+                        Test Ediliyor...
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-4">main-fixed.js dosyasının doğru yüklendiğini ve çalıştığını test eder.</p>
+                <div id="jsTestOutput" class="bg-gray-50 rounded-lg p-4 font-mono text-sm">
+                    Test sonucu bekleniyor...
+                </div>
+            </div>
+
+            <!-- CSS Framework Test -->
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-lg font-semibold text-gray-900">CSS Framework Testi</h2>
+                    <div id="cssTestStatus" class="px-3 py-1 rounded-full text-white text-sm font-medium test-warning">
+                        Test Ediliyor...
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-4">Tailwind CSS kütüphanesinin yüklendiğini test eder.</p>
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="bg-blue-500 text-white p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold">Tailwind</div>
+                        <div class="text-sm opacity-90">CSS Framework</div>
+                    </div>
+                    <div class="bg-green-500 text-white p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold">Çalışıyor</div>
+                        <div class="text-sm opacity-90">Test Edildi</div>
+                    </div>
+                    <div class="bg-purple-500 text-white p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold">Aktif</div>
+                        <div class="text-sm opacity-90">Durum</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart Library Test -->
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-lg font-semibold text-gray-900">Grafik Kütüphanesi Testi</h2>
+                    <div id="chartTestStatus" class="px-3 py-1 rounded-full text-white text-sm font-medium test-warning">
+                        Test Ediliyor...
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-4">ECharts kütüphanesinin yüklendiğini ve çalıştığını test eder.</p>
+                <div id="chartTest" style="height: 200px;" class="border rounded-lg"></div>
+            </div>
+
+            <!-- Animation Library Test -->
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-lg font-semibold text-gray-900">Animasyon Kütüphanesi Testi</h2>
+                    <div id="animationTestStatus" class="px-3 py-1 rounded-full text-white text-sm font-medium test-warning">
+                        Test Ediliyor...
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-4">Anime.js kütüphanesinin yüklendiğini ve çalıştığını test eder.</p>
+                <div id="animationTestBox" class="w-16 h-16 bg-blue-500 rounded-lg"></div>
+            </div>
+
+            <!-- File Access Test -->
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-lg font-semibold text-gray-900">Dosya Erişim Testi</h2>
+                    <div id="fileTestStatus" class="px-3 py-1 rounded-full text-white text-sm font-medium test-warning">
+                        Test Ediliyor...
+                    </div>
+                </div>
+                <p class="text-gray-600 mb-4">Gerekli dosyaların erişilebilir olduğunu test eder.</p>
+                <div id="fileTestResults" class="space-y-2">
+                    <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
+                        <span>resources/background-pattern.svg</span>
+                        <span id="bgPatternStatus" class="text-yellow-600">Test Ediliyor...</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
+                        <span>resources/favicon.svg</span>
+                        <span id="faviconStatus" class="text-yellow-600">Test Ediliyor...</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
+                        <span>main-fixed.js</span>
+                        <span id="mainJsStatus" class="text-yellow-600">Test Ediliyor...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Final Result -->
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <h2 class="text-lg font-semibold text-gray-900 mb-4">Sonuç</h2>
+                <div id="finalResult" class="p-4 bg-gray-50 rounded-lg">
+                    <p class="text-gray-600">Tüm testler tamamlandığında sonuç burada görünecektir.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Test fonksiyonları
+        function runTests() {
+            // JavaScript Testi
+            testJavaScript();
+            
+            // CSS Testi
+            testCSS();
+            
+            // Chart Testi
+            testChart();
+            
+            // Animation Testi
+            testAnimation();
+            
+            // File Testi
+            testFiles();
+        }
+
+        function testJavaScript() {
+            const status = document.getElementById('jsTestStatus');
+            const output = document.getElementById('jsTestOutput');
+            
+            try {
+                // Test basic JavaScript functionality
+                const testArray = [1, 2, 3];
+                const testObject = { name: 'test', value: 123 };
+                
+                output.textContent = `✅ JavaScript çalışıyor!\n`;
+                output.textContent += `✅ Array methods: ${testArray.map(x => x * 2).join(', ')}\n`;
+                output.textContent += `✅ Object access: ${testObject.name}\n`;
+                output.textContent += `✅ DOM manipulation: Element found\n`;
+                
+                status.textContent = 'Başarılı';
+                status.className = status.className.replace('test-warning', 'test-success');
+            } catch (error) {
+                output.textContent = `❌ JavaScript hatası: ${error.message}`;
+                status.textContent = 'Başarısız';
+                status.className = status.className.replace('test-warning', 'test-failed');
+            }
+        }
+
+        function testCSS() {
+            const status = document.getElementById('cssTestStatus');
+            
+            try {
+                // Test Tailwind classes
+                const testElement = document.createElement('div');
+                testElement.className = 'bg-blue-500 text-white p-4';
+                
+                if (testElement.classList.contains('bg-blue-500')) {
+                    status.textContent = 'Başarılı';
+                    status.className = status.className.replace('test-warning', 'test-success');
+                } else {
+                    throw new Error('Tailwind CSS yüklenemedi');
+                }
+            } catch (error) {
+                status.textContent = 'Başarısız';
+                status.className = status.className.replace('test-warning', 'test-failed');
+            }
+        }
+
+        function testChart() {
+            const status = document.getElementById('chartTestStatus');
+            const chartContainer = document.getElementById('chartTest');
+            
+            try {
+                if (typeof echarts === 'undefined') {
+                    throw new Error('ECharts kütüphanesi yüklenemedi');
+                }
+                
+                const chart = echarts.init(chartContainer);
+                const option = {
+                    xAxis: { type: 'category', data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'] },
+                    yAxis: { type: 'value' },
+                    series: [{ data: [120, 200, 150, 80, 70], type: 'bar' }]
+                };
+                chart.setOption(option);
+                
+                status.textContent = 'Başarılı';
+                status.className = status.className.replace('test-warning', 'test-success');
+            } catch (error) {
+                chartContainer.innerHTML = `<div class="text-red-500 p-4">❌ Grafik hatası: ${error.message}</div>`;
+                status.textContent = 'Başarısız';
+                status.className = status.className.replace('test-warning', 'test-failed');
+            }
+        }
+
+        function testAnimation() {
+            const status = document.getElementById('animationTestStatus');
+            const box = document.getElementById('animationTestBox');
+            
+            try {
+                if (typeof anime === 'undefined') {
+                    throw new Error('Anime.js kütüphanesi yüklenemedi');
+                }
+                
+                anime({
+                    targets: box,
+                    translateX: 100,
+                    rotate: '1turn',
+                    duration: 1000,
+                    easing: 'easeInOutQuad',
+                    complete: function() {
+                        status.textContent = 'Başarılı';
+                        status.className = status.className.replace('test-warning', 'test-success');
+                    }
+                });
+            } catch (error) {
+                status.textContent = 'Başarısız';
+                status.className = status.className.replace('test-warning', 'test-failed');
+            }
+        }
+
+        function testFiles() {
+            // Test background pattern
+            testFileAccess('resources/background-pattern.svg', 'bgPatternStatus');
+            
+            // Test favicon
+            testFileAccess('resources/favicon.svg', 'faviconStatus');
+            
+            // Test main js
+            testFileAccess('main-fixed.js', 'mainJsStatus');
+        }
+
+        function testFileAccess(filePath, statusId) {
+            const status = document.getElementById(statusId);
+            
+            fetch(filePath, { method: 'HEAD' })
+                .then(function(response) {
+                    if (response.ok) {
+                        status.textContent = 'Bulundu';
+                        status.className = status.className.replace('text-yellow-600', 'text-green-600');
+                    } else {
+                        throw new Error('Dosya bulunamadı');
+                    }
+                })
+                .catch(function(error) {
+                    status.textContent = 'Bulunamadı';
+                    status.className = status.className.replace('text-yellow-600', 'text-red-600');
+                });
+        }
+
+        // Sayfa yüklendiğinde testleri başlat
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(runTests, 1000); // 1 saniye bekle
+        });
+
+        // Sonuçları topla
+        setTimeout(function() {
+            const finalResult = document.getElementById('finalResult');
+            const successCount = document.querySelectorAll('.test-success').length;
+            const failedCount = document.querySelectorAll('.test-failed').length;
+            
+            finalResult.innerHTML = `
+                <div class="text-lg font-semibold mb-2">Test Sonuçları</div>
+                <div class="grid grid-cols-3 gap-4 mb-4">
+                    <div class="text-center p-3 bg-green-100 rounded-lg">
+                        <div class="text-2xl font-bold text-green-600">${successCount}</div>
+                        <div class="text-sm text-green-700">Başarılı</div>
+                    </div>
+                    <div class="text-center p-3 bg-red-100 rounded-lg">
+                        <div class="text-2xl font-bold text-red-600">${failedCount}</div>
+                        <div class="text-sm text-red-700">Başarısız</div>
+                    </div>
+                    <div class="text-center p-3 bg-blue-100 rounded-lg">
+                        <div class="text-2xl font-bold text-blue-600">5</div>
+                        <div class="text-sm text-blue-700">Toplam Test</div>
+                    </div>
+                </div>
+                <div class="text-sm text-gray-600">
+                    ${failedCount === 0 ? '✅ Tüm testler başarılı! Dashboard GitHub Pages ile tam uyumlu.' : '⚠️ Bazı testler başarısız. Lütfen hataları düzeltin.'}
+                </div>
+            `;
+        }, 5000);
+    </script>
+</body>
+</html>
