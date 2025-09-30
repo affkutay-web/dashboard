@@ -1,48 +1,58 @@
-// public/js/api.js  (browser side)
-// Bu dosya Cuttly API ile bağlantı kurmak için kullanılır
-// Not: Gerçek kullanım için Firebase Functions yapılandırması gerekir
+// api.js  –-  GitHub-Pages compatible
+// -----------------------------------------------------------
+// 1.  If USE_REAL_API is false (default) we return mock numbers.
+// 2.  When you deploy a real /api/cuttly-stats route somewhere,
+//     set USE_REAL_API = true  and change API_ENDPOINT below.
+// -----------------------------------------------------------
+(function (global) {
+  'use strict';
 
-// Mock API fonksiyonu - Gerçek kullanım için yorum satırına alın
-export async function fetchLinkAnalytics(shortLink) {
-  // Simüle edilmiş veri döndür
-  await new Promise(resolve => setTimeout(resolve, 500));
-  
-  return {
-    total: Math.floor(Math.random() * 10000) + 1000,
-    daily: Math.floor(Math.random() * 500) + 50,
-    yesterday: Math.floor(Math.random() * 400) + 40,
-    weekly: Math.floor(Math.random() * 3000) + 500,
-    monthly: Math.floor(Math.random() * 10000) + 2000,
-    allTime: Math.floor(Math.random() * 15000) + 3000,
-    trend: Array.from({length: 7}, () => Math.floor(Math.random() * 200) + 50)
-  };
-}
+  const USE_REAL_API   = false;           // << flip when ready
+  const API_ENDPOINT   = '/api/cuttly-stats'; // or 'https://my-vercel.app/api/cuttly-stats'
 
-/* 
-// Gerçek API kullanımı için (Firebase Functions gerektirir):
-import { httpsCallable, getFunctions } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-functions.js";
-
-const functions = getFunctions();
-const getCuttlyStats = httpsCallable(functions, 'getCuttlyStats');
-
-export async function fetchLinkAnalytics(shortLink) {
-  try {
-    const { data } = await getCuttlyStats({ short: shortLink });
+  /* ---------------------------------------------------------
+   * Mock data helper
+   * --------------------------------------------------------- */
+  function getMockStats() {
     return {
-      total       : data.stats?.clicks          || 0,
-      daily       : data.stats?.clicksToday     || 0,
-      yesterday   : data.stats?.clicksYesterday || 0,
-      weekly      : data.stats?.clicksWeek      || 0,
-      monthly     : data.stats?.clicksMonth     || 0,
-      allTime     : data.stats?.clicks          || 0,
-      trend       : data.stats?.dailyClicks     || []
-    };
-  } catch (error) {
-    console.error('API Hatası:', error);
-    // Hata durumunda mock veri döndür
-    return {
-      total: 0, daily: 0, yesterday: 0, weekly: 0, monthly: 0, allTime: 0, trend: []
+      total   : Math.floor(Math.random() * 10000) + 1000,
+      daily   : Math.floor(Math.random() * 500)   + 50,
+      yesterday:Math.floor(Math.random() * 400)   + 40,
+      weekly  : Math.floor(Math.random() * 3000)  + 500,
+      monthly : Math.floor(Math.random() * 10000) + 2000,
+      allTime : Math.floor(Math.random() * 15000) + 3000,
+      trend   : Array.from({ length: 7 }, function () {
+                  return Math.floor(Math.random() * 200) + 50;
+                })
     };
   }
-}
-*/
+
+  /* ---------------------------------------------------------
+   * Real API caller
+   * --------------------------------------------------------- */
+  async function fetchRealStats(shortLink) {
+    const url = API_ENDPOINT + '?short=' + encodeURIComponent(shortLink);
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('Network error – ' + res.status);
+    return await res.json();   // should match the mock shape
+  }
+
+  /* ---------------------------------------------------------
+   * Public function – same signature as before
+   * --------------------------------------------------------- */
+  global.fetchLinkAnalytics = async function (shortLink) {
+    try {
+      if (USE_REAL_API) {
+        return await fetchRealStats(shortLink);
+      }
+      // else: mock path
+      await new Promise(function (r) { setTimeout(r, 400); }); // tiny delay
+      return getMockStats();
+    } catch (err) {
+      console.warn('fetchLinkAnalytics() – ', err);
+      // graceful fallback
+      return getMockStats();
+    }
+  };
+
+})(window);
