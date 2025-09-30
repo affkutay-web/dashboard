@@ -7,7 +7,7 @@
 (function (global) {
   'use strict';
 
-  const USE_REAL_API   = false;           // << flip when ready
+  const USE_REAL_API   = true;           // << flip when ready
   const API_ENDPOINT   = '/api/cuttly-stats'; // or 'https://my-vercel.app/api/cuttly-stats'
 
   /* ---------------------------------------------------------
